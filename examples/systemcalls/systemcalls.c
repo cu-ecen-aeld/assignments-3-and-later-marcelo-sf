@@ -1,4 +1,10 @@
 #include "systemcalls.h"
+#include <sys/wait.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/stat.h>
+/*#include <stdio.h>*/
+#include <fcntl.h>
 
 /**
  * @param cmd the command to execute with system()
@@ -10,14 +16,16 @@
 bool do_system(const char *cmd)
 {
 
-/*
- * TODO  add your code here
- *  Call the system() function with the command set in the cmd
- *   and return a boolean true if the system() call completed with success
- *   or false() if it returned a failure
-*/
+    int system_status;
 
-    return true;
+    system_status = system(cmd);
+    if(NULL == cmd) {
+	return system_status != 0;
+    }
+    else {
+    	return WIFEXITED(system_status);
+    }
+
 }
 
 /**
@@ -47,7 +55,7 @@ bool do_exec(int count, ...)
     command[count] = NULL;
     // this line is to avoid a compile warning before your implementation is complete
     // and may be removed
-    command[count] = command[count];
+    //command[count] = command[count];
 
 /*
  * TODO:
@@ -58,10 +66,33 @@ bool do_exec(int count, ...)
  *   as second argument to the execv() command.
  *
 */
+    pid_t fork_status;
+    int wait_options=0;
+    int wstatus;
+    int wait_status;
 
-    va_end(args);
+    if(command[0][0] != '/') return false;
 
-    return true;
+    fork_status = fork();
+    if(0 == fork_status) {
+	/* child running */
+	execv(command[0], &command[0]);
+	perror("execv failed");
+	return false;
+    }
+    if(-1 == fork_status) {
+	perror("fork failed");
+	return false;
+    }
+    else {
+	wait_status = waitpid(fork_status,&wstatus,wait_options);
+	if(-1 == wait_status) {
+		fprintf(stderr,"waitpid failed");
+		return false;
+	}
+    	va_end(args);
+	return 0 != WIFEXITED(wstatus) &&  0 == WEXITSTATUS(wstatus);
+    }
 }
 
 /**
@@ -84,6 +115,7 @@ bool do_exec_redirect(const char *outputfile, int count, ...)
     // and may be removed
     command[count] = command[count];
 
+    fprintf(stderr,"outputfile:%s\n",outputfile);
 
 /*
  * TODO
@@ -93,7 +125,36 @@ bool do_exec_redirect(const char *outputfile, int count, ...)
  *
 */
 
-    va_end(args);
+    pid_t fork_status;
+    int wait_options=0;
+    int wstatus;
+    int wait_status;
 
-    return true;
+    fork_status = fork();
+    if(0 == fork_status) {
+      int fd = open(outputfile, O_WRONLY|O_TRUNC|O_CREAT, 0644);
+      if (fd < 0) { 
+	    perror("open"); 
+	    abort(); 
+      }
+      if (dup2(fd, 1) < 0) { perror("dup2"); abort(); }
+      close(fd);
+      /* child running */
+      execv(command[0], &command[0]);
+      perror("execv failed");
+      return false;
+    }
+    if(-1 == fork_status) {
+        perror("fork failed");
+        return false;
+    }
+    else {
+        wait_status = waitpid(fork_status,&wstatus,wait_options);
+        if(-1 == wait_status) {
+                fprintf(stderr,"waitpid failed");
+                return false;
+        }
+        va_end(args);
+        return 0 != WIFEXITED(wstatus) &&  0 == WEXITSTATUS(wstatus);
+    }
 }
