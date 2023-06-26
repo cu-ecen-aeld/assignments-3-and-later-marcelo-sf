@@ -106,6 +106,7 @@ make CROSS_COMPILE=aarch64-none-linux-gnu-
 cp autorun-qemu.sh start-qemu-app.sh  start-qemu-terminal.sh writer writer.sh finder.sh finder-test.sh dependencies.sh ${OUTDIR}/rootfs/home/
 mkdir -p ${OUTDIR}/rootfs/home/conf
 cp ./conf/username.txt ${OUTDIR}/rootfs/home/conf/
+cp ./conf/assignment.txt ${OUTDIR}/rootfs/home/conf/
 
 # TODO: Chown the root directory
 #sudo chown $(id -u):$(id -g) ${OUTDIR}/rootfs
