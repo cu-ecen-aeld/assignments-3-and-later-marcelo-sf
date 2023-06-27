@@ -105,8 +105,13 @@ make CROSS_COMPILE=aarch64-none-linux-gnu-
 # on the target rootfs
 cp autorun-qemu.sh start-qemu-app.sh  start-qemu-terminal.sh writer writer.sh finder.sh finder-test.sh dependencies.sh ${OUTDIR}/rootfs/home/
 mkdir -p ${OUTDIR}/rootfs/home/conf
+chmod 777 ${OUTDIR}/rootfs/home/conf
 cp ./conf/username.txt ${OUTDIR}/rootfs/home/conf/
 cp ./conf/assignment.txt ${OUTDIR}/rootfs/home/conf/
+mkdir -p ${OUTDIR}/rootfs/conf
+chmod 777 ${OUTDIR}/rootfs/conf
+cp ./conf/username.txt ${OUTDIR}/rootfs/conf/
+cp ./conf/assignment.txt ${OUTDIR}/rootfs/conf/
 
 # TODO: Chown the root directory
 #sudo chown $(id -u):$(id -g) ${OUTDIR}/rootfs
