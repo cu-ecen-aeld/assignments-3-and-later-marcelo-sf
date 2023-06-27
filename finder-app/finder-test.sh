@@ -35,6 +35,9 @@ echo "Writing ${NUMFILES} files containing string ${WRITESTR} to ${WRITEDIR}"
 rm -rf "${WRITEDIR}"
 
 # create $WRITEDIR if not assignment1
+CURR_DIR=`pwd`
+echo "Current dir: {CURR_DIR}"
+cd /home
 assignment=`cat ../conf/assignment.txt`
 
 if [ $assignment != 'assignment1' ]
