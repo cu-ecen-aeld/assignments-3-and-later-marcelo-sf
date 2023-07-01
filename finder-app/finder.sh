@@ -14,6 +14,6 @@ then
   exit 1
 fi
 
-file_count=`find $filesdir -type f | wc -l`
-match_count=`find $filesdir -type f -exec fgrep $searchstring {}  \; | wc -l`
+file_count=`ls -pR $filesdir | fgrep -v / | wc -l`
+match_count=`fgrep -r  $searchstring $filesdir | wc -l`
 echo "The number of files are $file_count and the number of matching lines are $match_count"
