@@ -103,7 +103,8 @@ make CROSS_COMPILE=aarch64-none-linux-gnu-
 
 # TODO: Copy the finder related scripts and executables to the /home directory
 # on the target rootfs
-cp autorun-qemu.sh start-qemu-app.sh  start-qemu-terminal.sh writer writer.sh finder.sh finder-test.sh dependencies.sh ${OUTDIR}/rootfs/home/
+echo "Copying files from finder dir"
+cp autorun-qemu.sh start-qemu-app.sh Makefile manual-linux.sh  start-qemu-terminal.sh writer writer.c writer.sh finder.sh finder-test.sh dependencies.sh ${OUTDIR}/rootfs/home/
 mkdir -p ${OUTDIR}/rootfs/home/conf
 chmod 777 ${OUTDIR}/rootfs/home/conf
 cp ./conf/username.txt ${OUTDIR}/rootfs/home/conf/
