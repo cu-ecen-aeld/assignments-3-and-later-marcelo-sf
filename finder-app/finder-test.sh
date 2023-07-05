@@ -4,6 +4,11 @@
 
 #make clean
 #make
+echo "WHOAMI"
+echo "$USER"
+id -u -n
+id -u
+echo "finder-test.sh running"
 echo "I am at "
 echo `pwd`
 
@@ -14,6 +19,8 @@ NUMFILES=10
 WRITESTR=AELD_IS_FUN
 WRITEDIR=/tmp/aeld-data
 username=$(cat conf/username.txt)
+echo "username" 
+echo $username
 
 if [ $# -lt 3 ]
 then

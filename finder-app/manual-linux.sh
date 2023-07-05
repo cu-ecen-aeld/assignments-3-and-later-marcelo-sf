@@ -104,15 +104,19 @@ make CROSS_COMPILE=aarch64-none-linux-gnu-
 # TODO: Copy the finder related scripts and executables to the /home directory
 # on the target rootfs
 echo "Copying files from finder dir"
-cp autorun-qemu.sh start-qemu-app.sh Makefile manual-linux.sh  start-qemu-terminal.sh writer writer.c writer.sh finder.sh finder-test.sh dependencies.sh ${OUTDIR}/rootfs/home/
+cp -a autorun-qemu.sh start-qemu-app.sh Makefile manual-linux.sh  start-qemu-terminal.sh writer writer.c writer.sh finder.sh finder-test.sh dependencies.sh ${OUTDIR}/rootfs/home/
 mkdir -p ${OUTDIR}/rootfs/home/conf
 chmod 777 ${OUTDIR}/rootfs/home/conf
-cp ./conf/username.txt ${OUTDIR}/rootfs/home/conf/
-cp ./conf/assignment.txt ${OUTDIR}/rootfs/home/conf/
+cp -a ./conf/username.txt ${OUTDIR}/rootfs/home/conf/
+cp -a ./conf/assignment.txt ${OUTDIR}/rootfs/home/conf/
 mkdir -p ${OUTDIR}/rootfs/conf
 chmod 777 ${OUTDIR}/rootfs/conf
-cp ./conf/username.txt ${OUTDIR}/rootfs/conf/
-cp ./conf/assignment.txt ${OUTDIR}/rootfs/conf/
+cp -a ./conf/username.txt ${OUTDIR}/rootfs/conf/
+cp -a ./conf/assignment.txt ${OUTDIR}/rootfs/conf/
+echo "Copied files"
+ls -la ${OUTDIR}/rootfs/conf/
+ls -la ${OUTDIR}/rootfs/home/conf
+ls -la ${OUTDIR}/rootfs/home/
 
 # TODO: Chown the root directory
 #sudo chown $(id -u):$(id -g) ${OUTDIR}/rootfs
