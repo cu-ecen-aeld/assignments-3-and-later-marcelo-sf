@@ -40,7 +40,11 @@ if [ ! -e ${OUTDIR}/linux-stable/arch/${ARCH}/boot/Image ]; then
     make -j4 ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu- defconfig
     make -j4 ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu- all
     make -j4 ARCH=arm64 CROSS_COMPILE=aarch64-none-linux-gnu- dtbs
-    cp ./arch/${ARCH}/boot/Image ${OUTDIR}/Image
+fi
+if [ -e ${OUTDIR}/linux-stable/arch/${ARCH}/boot/Image ]; then
+    cp ${OUTDIR}/linux-stable/arch/${ARCH}/boot/Image ${OUTDIR}/Image
+else
+	echo "Kernel Image was not build or not found"
 fi
 
 echo "Adding the Image in outdir"
