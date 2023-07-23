@@ -41,7 +41,7 @@ rm -rf "${WRITEDIR}"
 #CURR_DIR=`pwd`
 #echo "Current dir: ${CURR_DIR}"
 #cd /home
-assignment=`cat ../conf/assignment.txt`
+assignment=`cat ./conf/assignment.txt`
 
 if [ $assignment != 'assignment1' ]
 then
