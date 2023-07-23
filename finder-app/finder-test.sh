@@ -4,13 +4,9 @@
 
 #make clean
 #make
-echo "WHOAMI"
-echo "$USER"
-id -u -n
-id -u
-echo "finder-test.sh running"
-echo "I am at "
-echo `pwd`
+
+cd `dirname $0`
+pwd
 
 set -e
 set -u
@@ -18,9 +14,7 @@ set -u
 NUMFILES=10
 WRITESTR=AELD_IS_FUN
 WRITEDIR=/tmp/aeld-data
-username=$(cat conf/username.txt)
-echo "username" 
-echo $username
+username=$(cat ./conf/username.txt)
 
 if [ $# -lt 3 ]
 then
@@ -80,9 +74,12 @@ rm -rf /tmp/aeld-data
 set +e
 echo ${OUTPUTSTRING} | grep "${MATCHSTR}"
 if [ $? -eq 0 ]; then
+        echo ${OUTPUTSTRING} >/tmp/assignment4-result.txt
 	echo "success"
 	exit 0
 else
+        echo ${OUTPUTSTRING} >/tmp/assignment4-result.txt
 	echo "failed: expected  ${MATCHSTR} in ${OUTPUTSTRING} but instead found"
 	exit 1
 fi
+
