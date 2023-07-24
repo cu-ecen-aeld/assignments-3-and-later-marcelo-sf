@@ -30,7 +30,7 @@ int main(int argc, char*argv[]) {
 		closelog();
 		exit(1);
 	}
-	syslog(LOG_DEBUG,"Writing %s to %s",text,file_path);
+	syslog(LOG_INFO,"Writing %s to %s\n",text,file_path);
 	write_status = fprintf(file_handler,"%s",text);
 	if(write_status < 0) {
 		perror("write error in printf");
@@ -40,5 +40,6 @@ int main(int argc, char*argv[]) {
 	}
 	fclose(file_handler);
 	closelog();
+	printf("%s - exiting\n",argv[0]);
 	
 }
