@@ -15,10 +15,11 @@ int main(int argc, char*argv[]) {
 	openlog ("writer", LOG_CONS | LOG_PID | LOG_NDELAY, LOG_LOCAL1);
 
 
-	syslog(LOG_ERR,"%s Starting",argv[0]);
+	syslog(LOG_ERR,"%s Starting\n",argv[0]);
 
 	if (argc < 3) {
 		syslog(LOG_ERR,"missing arguments writefile writestr\n");
+		closelog();
 		exit(1);
 	}
 
@@ -26,6 +27,7 @@ int main(int argc, char*argv[]) {
 	if(NULL == file_handler) {
 		perror("writer");
 		syslog(LOG_ERR,"Could not open file %s for read/write/append",file_path);
+		closelog();
 		exit(1);
 	}
 	syslog(LOG_DEBUG,"Writing %s to %s",text,file_path);
@@ -33,6 +35,7 @@ int main(int argc, char*argv[]) {
 	if(write_status < 0) {
 		perror("write error in printf");
 		syslog(LOG_ERR,"In file %s, error: %s",file_path, strerror(errno));
+		closelog();
 		exit(1);
 	}
 	fclose(file_handler);
