@@ -10,7 +10,10 @@ int main(int argc, char*argv[]) {
 	const char* text = argv[2];
 	FILE* file_handler=NULL;
 	size_t write_status;
-	openlog ("writer", LOG_CONS | LOG_PID | LOG_NDELAY, LOG_USER);
+
+	setlogmask (LOG_UPTO (LOG_NOTICE));
+	openlog ("writer", LOG_CONS | LOG_PID | LOG_NDELAY, LOG_LOCAL1);
+
 
 	syslog(LOG_INFO,"%s Starting",argv[0]);
 
@@ -33,5 +36,6 @@ int main(int argc, char*argv[]) {
 		exit(1);
 	}
 	fclose(file_handler);
+	closelog();
 	
 }
