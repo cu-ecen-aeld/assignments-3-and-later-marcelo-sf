@@ -15,7 +15,7 @@ int main(int argc, char*argv[]) {
 	openlog ("writer", LOG_CONS | LOG_PID | LOG_NDELAY, LOG_LOCAL1);
 
 
-	syslog(LOG_INFO,"%s Starting",argv[0]);
+	syslog(LOG_ERR,"%s Starting",argv[0]);
 
 	if (argc < 3) {
 		syslog(LOG_ERR,"missing arguments writefile writestr\n");
